@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DestroyShell : MonoBehaviour
 {
- 
     void Start()
     {
         Destroy(this.gameObject, 3);  
