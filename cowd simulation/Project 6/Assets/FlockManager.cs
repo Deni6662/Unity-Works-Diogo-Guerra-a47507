@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FlockManager:MonoBehaviour {
+public class FlockManager : MonoBehaviour {
 
     public GameObject fishPrefab;
     public int numFish = 20;
@@ -8,32 +8,38 @@ public class FlockManager:MonoBehaviour {
     public Vector3 swimLimits = new Vector3(5.0f, 5.0f, 5.0f);
     public Vector3 goalPos;
 
+
     [Header("Fish Settings")]
     [Range(0.0f, 5.0f)]
-    public float minSpeed;
+    public float minSpeed;     
     [Range(0.0f, 5.0f)]
-    public float maxSpeed;
+    public float maxSpeed;         
     [Range(1.0f, 10.0f)]
-    public float neighbourDistance;
+    public float neighbourDistance; 
     [Range(0.0f, 5.0f)]
-    public float rotationSpeed;
+    public float rotationSpeed;   
 
     void Start() {
+
         allFish = new GameObject[numFish];
         for (int i = 0; i < numFish; ++i) {
+
             Vector3 pos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
                                                                 Random.Range(-swimLimits.x, swimLimits.x),
                                                                 Random.Range(-swimLimits.x, swimLimits.x));
             allFish[i] = (GameObject)Instantiate(fishPrefab, pos, Quaternion.identity);
             allFish[i].GetComponent<Flock>().myManager = this;
         }
+
         goalPos = this.transform.position;
     }
 
     void Update() {
-        if(Random.Range(0,100)<10)
+        if (Random.Range(0, 100) < 10) 
+        {
             goalPos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
-                                                        Random.Range(-swimLimits.x, swimLimits.x),
-                                                        Random.Range(-swimLimits.x, swimLimits.x));
+                                                            Random.Range(-swimLimits.x, swimLimits.x),
+                                                            Random.Range(-swimLimits.x, swimLimits.x));
+        }
     }
 }
