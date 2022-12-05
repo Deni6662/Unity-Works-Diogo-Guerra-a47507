@@ -1,9 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-
 public class WorldState
 {
     public string key;
@@ -19,7 +18,7 @@ public class WorldStates
         states = new Dictionary<string, int>();
     }
 
-    public bool hasString(string key)
+    public bool HasState(string key)
     {
         return states.ContainsKey(key);
     }

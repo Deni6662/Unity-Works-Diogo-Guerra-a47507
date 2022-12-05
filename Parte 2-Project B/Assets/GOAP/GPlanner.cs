@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -9,6 +9,7 @@ public class Node
     public float cost;
     public Dictionary<string, int> state;
     public GAction action;
+
     public Node(Node parent, float cost, Dictionary<string, int> allstates, GAction action)
     {
         this.parent = parent;
@@ -28,19 +29,20 @@ public class GPlanner
             if (a.IsAchievable())
                 usableActions.Add(a);
         }
+
         List<Node> leaves = new List<Node>();
         Node start = new Node(null, 0, GWorld.Instance.GetWorld().GetStates(), null);
 
         bool success = BuildGraph(start, leaves, usableActions, goal);
 
-        if(!success)
+        if (!success)
         {
-            Debug.Log("NO PLAN!!!!!!!");
+            Debug.Log("NO PLAN");
             return null;
         }
 
         Node cheapest = null;
-        foreach(Node leaf in leaves)
+        foreach (Node leaf in leaves)
         {
             if (cheapest == null)
                 cheapest = leaf;
@@ -53,7 +55,7 @@ public class GPlanner
 
         List<GAction> result = new List<GAction>();
         Node n = cheapest;
-        while(n != null)
+        while (n != null)
         {
             if (n.action != null)
             {
@@ -63,13 +65,13 @@ public class GPlanner
         }
 
         Queue<GAction> queue = new Queue<GAction>();
-        foreach(GAction a in result)
+        foreach (GAction a in result)
         {
             queue.Enqueue(a);
         }
 
-        Debug.Log("The plan is: ");
-        foreach(GAction a in queue)
+        Debug.Log("The Plan is: ");
+        foreach (GAction a in queue)
         {
             Debug.Log("Q: " + a.actionName);
         }
@@ -77,21 +79,22 @@ public class GPlanner
         return queue;
     }
 
-    private bool BuildGraph(Node parent, List<Node> leaves, List<GAction> usableActions, Dictionary<string, int> goal)
+    private bool BuildGraph(Node parent, List<Node> leaves, List<GAction> usuableActions, Dictionary<string, int> goal)
     {
         bool foundPath = false;
-        foreach(GAction action in usableActions)
+        foreach (GAction action in usuableActions)
         {
             if (action.IsAchievableGiven(parent.state))
             {
                 Dictionary<string, int> currentState = new Dictionary<string, int>(parent.state);
-                foreach(KeyValuePair<string,int> eff in action.effects)
+                foreach (KeyValuePair<string, int> eff in action.effects)
                 {
                     if (!currentState.ContainsKey(eff.Key))
                         currentState.Add(eff.Key, eff.Value);
                 }
 
                 Node node = new Node(parent, parent.cost + action.cost, currentState, action);
+
                 if (GoalAchieved(goal, currentState))
                 {
                     leaves.Add(node);
@@ -99,7 +102,7 @@ public class GPlanner
                 }
                 else
                 {
-                    List<GAction> subset = ActionSubset(usableActions, action);
+                    List<GAction> subset = ActionSubset(usuableActions, action);
                     bool found = BuildGraph(node, leaves, subset, goal);
                     if (found)
                         foundPath = true;
@@ -122,11 +125,12 @@ public class GPlanner
     private List<GAction> ActionSubset(List<GAction> actions, GAction removeMe)
     {
         List<GAction> subset = new List<GAction>();
-        foreach(GAction a in actions)
+        foreach (GAction a in actions)
         {
-            if (a.Equals(removeMe))
+            if (!a.Equals(removeMe))
                 subset.Add(a);
         }
         return subset;
     }
+
 }

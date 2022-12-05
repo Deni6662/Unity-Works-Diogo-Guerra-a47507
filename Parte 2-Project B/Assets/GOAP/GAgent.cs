@@ -1,12 +1,13 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
 public class SubGoal
 {
-    public Dictionary<string,int> sgoals;
+    public Dictionary<string, int> sgoals;
     public bool remove;
+
     public SubGoal(string s, int i, bool r)
     {
         sgoals = new Dictionary<string, int>();
@@ -33,6 +34,7 @@ public class GAgent : MonoBehaviour
             actions.Add(a);
     }
 
+
     bool invoked = false;
     void CompleteAction()
     {
@@ -47,7 +49,7 @@ public class GAgent : MonoBehaviour
         {
             if (currentAction.agent.hasPath && currentAction.agent.remainingDistance < 1f)
             {
-                if(!invoked)
+                if (!invoked)
                 {
                     Invoke("CompleteAction", currentAction.duration);
                     invoked = true;
@@ -78,12 +80,11 @@ public class GAgent : MonoBehaviour
             if (currentGoal.remove)
             {
                 goals.Remove(currentGoal);
-
             }
             planner = null;
         }
 
-        if (actionQueue !=null && actionQueue.Count > 0)
+        if (actionQueue != null && actionQueue.Count > 0)
         {
             currentAction = actionQueue.Dequeue();
             if (currentAction.PrePerform())
@@ -101,6 +102,7 @@ public class GAgent : MonoBehaviour
             {
                 actionQueue = null;
             }
+
         }
 
     }
