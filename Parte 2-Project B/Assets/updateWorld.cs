@@ -18,7 +18,7 @@ public class updateWorld : MonoBehaviour
         states.text = "";
         foreach(KeyValuePair<string,int> s in worldstates)
         {
-            states.text += s.Key + ", " + s.Value + "/n";
+            states.text += s.Key + ", " + s.Value + "\n";
         }
     }
 }
