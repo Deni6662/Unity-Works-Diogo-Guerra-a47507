@@ -23,7 +23,7 @@ public sealed class GWorld
 
     public WorldStates GetWorld()
     {
-        return world
+        return world;
     }
 }
 
