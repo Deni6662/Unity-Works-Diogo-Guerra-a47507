@@ -366,8 +366,12 @@ MonoBehaviour:
   target: {fileID: 0}
   targetTag: 
   duration: 0
-  preConditions: []
-  afterEffects: []
+  preConditions:
+  - key: PatientPickUp
+    value: 1
+  afterEffects:
+  - key: treatPatient
+    value: 1
   agent: {fileID: 0}
   running: 0
 --- !u!1 &306721101
